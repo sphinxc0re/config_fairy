@@ -2,6 +2,10 @@
 name = "config_fairy"
 version = "0.1.0"
 authors = ["Julian Laubstein <contact@julianlaubstein.de>"]
+description = "An ssh_config parsing, validation and data extraction library"
+repository = "https://github.com/sphinxc0re/config_fairy"
+readme = "README.md"
+license = "GPL-3.0"
 
 [dependencies]
 pest = "^1.0.0-beta"
