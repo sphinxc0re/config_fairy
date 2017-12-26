@@ -1,5 +1,5 @@
 [package]
-name = "ssh_config"
+name = "config_fairy"
 version = "0.1.0"
 authors = ["Julian Laubstein <contact@julianlaubstein.de>"]
 
