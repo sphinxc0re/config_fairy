@@ -1,0 +1,5 @@
+# Test ssh config for testing purposes
+
+Host hallo-test
+  AddressFamily inet6   # asfasdf
+  BatchMode yes

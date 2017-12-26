@@ -1,0 +1,8 @@
+[package]
+name = "ssh_config"
+version = "0.1.0"
+authors = ["Julian Laubstein <contact@julianlaubstein.de>"]
+
+[dependencies]
+pest = "^1.0.0-beta"
+pest_derive = "^1.0.0-beta"
