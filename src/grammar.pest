@@ -6,7 +6,12 @@ host_option = {
     add_keys_to_agent |
     address_family |
     batch_mode |
-    bind_address
+    bind_address |
+    canonical_domains |
+    canonicalize_fallback_local |
+    canonicalize_hostname |
+    canonicalize_max_dots |
+    canonicalize_permitted_cnames
 }
 
 single_config = {
@@ -63,6 +68,38 @@ batch_mode = { ^"BatchMode" ~ yes_or_no }
 // Use the specified address on the local machine as the source address of the connection.  Only useful on systems with more than one address.  Note that this option does not
 // work if UsePrivilegedPort is set to yes.
 bind_address = { ^"BindAddress" ~ ip_address }
+
+// CanonicalDomains
+// When CanonicalizeHostname is enabled, this option specifies the list of domain suffixes in which to search for the specified destination host.
+canonical_domains = { ^"CanonicalDomains" ~ pattern+ }
+
+// CanonicalizeFallbackLocal
+// Specifies whether to fail with an error when hostname canonicalization fails.  The default, yes, will attempt to look up the unqualified hostname using the system resolver's
+// search rules.  A value of no will cause ssh(1) to fail instantly if CanonicalizeHostname is enabled and the target hostname cannot be found in any of the domains specified by
+// CanonicalDomains.
+canonicalize_fallback_local = { ^"CanonicalizeFallbackLocal" ~ yes_or_no }
+
+// CanonicalizeHostname
+// Controls whether explicit hostname canonicalization is performed.  The default, no, is not to perform any name rewriting and let the system resolver handle all hostname
+// lookups.  If set to yes then, for connections that do not use a ProxyCommand, ssh(1) will attempt to canonicalize the hostname specified on the command line using the
+// CanonicalDomains suffixes and CanonicalizePermittedCNAMEs rules.  If CanonicalizeHostname is set to always, then canonicalization is applied to proxied connections too.
+//
+// If this option is enabled, then the configuration files are processed again using the new target name to pick up any new configuration in matching Host and Match stanzas.
+canonicalize_hostname = { ^"CanonicalizeHostname" ~ yes_or_no }
+
+// CanonicalizeMaxDots
+// Specifies the maximum number of dot characters in a hostname before canonicalization is disabled.  The default, 1, allows a single dot (i.e. hostname.subdomain).
+canonicalize_max_dots = { ^"CanonicalizeMaxDots" ~ int }
+
+// CanonicalizePermittedCNAMEs
+// Specifies rules to determine whether CNAMEs should be followed when canonicalizing hostnames.  The rules consist of one or more arguments of
+// source_domain_list:target_domain_list, where source_domain_list is a pattern-list of domains that may follow CNAMEs in canonicalization, and target_domain_list is a pattern-
+// list of domains that they may resolve to.
+//
+// For example, "*.a.example.com:*.b.example.com,*.c.example.com" will allow hostnames matching "*.a.example.com" to be canonicalized to names in the "*.b.example.com" or
+// "*.c.example.com" domains.
+canonicalize_permitted_cnames = { ^"CanonicalizePermittedCNAMEs" ~ pattern+ }
+
 
 ip_address = { ipv4_address }
 
